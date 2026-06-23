@@ -61,6 +61,10 @@ button:hover {
 }
 
 .topbar {
+  align-items: end;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr auto;
   margin-bottom: 22px;
 }
 
@@ -252,6 +256,7 @@ textarea {
 }
 
 @media (max-width: 860px) {
+  .topbar,
   .board,
   .form-row {
     grid-template-columns: 1fr;

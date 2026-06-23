@@ -23,6 +23,7 @@ const elements = {
   form: document.querySelector("#orderForm"),
   formTitle: document.querySelector("#formTitle"),
   resetForm: document.querySelector("#resetForm"),
+  exportCsv: document.querySelector("#exportCsv"),
   template: document.querySelector("#orderTemplate"),
   columns: {
     kommende: document.querySelector("#kommendeOrders"),
@@ -178,7 +179,34 @@ function handleSubmit(event) {
   render();
 }
 
+function exportCsv() {
+  const statusLabels = {
+    kommende: "Kommende",
+    igang: "I gang",
+    faerdig: "Færdig"
+  };
+  const rows = [
+    ["Kunde", "Ordre", "Status", "Dato", "Note"],
+    ...orders.map((order) => [
+      order.customer,
+      order.orderName,
+      statusLabels[order.status] || order.status,
+      order.deliveryDate,
+      order.note
+    ])
+  ];
+  const csv = rows.map((row) => row.map((cell) => `"${String(cell || "").replaceAll('"', '""')}"`).join(";")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "ordrebog-hertz-vaaben.csv";
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 elements.form.addEventListener("submit", handleSubmit);
 elements.resetForm.addEventListener("click", resetForm);
+elements.exportCsv.addEventListener("click", exportCsv);
 
 render();
