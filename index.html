@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ordrebog | Hertz & Vaaben</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Hertz & Vaaben</p>
+          <h1>Ordrebog</h1>
+          <p class="intro">En enkel oversigt over kommende ordrer, ordrer i gang og færdige ordrer.</p>
+        </div>
+      </header>
+
+      <section class="panel">
+        <h2 id="formTitle">Skriv ordre ind</h2>
+        <form id="orderForm">
+          <input type="hidden" id="orderId" />
+          <label>
+            Kunde
+            <input id="customer" required type="text" autocomplete="organization" placeholder="Kundenavn" />
+          </label>
+          <label>
+            Ordre
+            <input id="orderName" required type="text" placeholder="Hvad skal laves?" />
+          </label>
+          <div class="form-row">
+            <label>
+              Status
+              <select id="status" required>
+                <option value="kommende">Kommende ordre</option>
+                <option value="igang">I gang</option>
+                <option value="faerdig">Færdig</option>
+              </select>
+            </label>
+            <label>
+              Dato
+              <input id="deliveryDate" type="date" />
+            </label>
+          </div>
+          <label>
+            Note
+            <textarea id="note" rows="3" placeholder="Evt. kort note"></textarea>
+          </label>
+          <div class="form-actions">
+            <button class="secondary" id="resetForm" type="button">Ryd</button>
+            <button type="submit">Gem ordre</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="board" aria-label="Ordreoversigt">
+        <section class="column" data-status="kommende">
+          <div class="column-heading">
+            <h2>Kommende</h2>
+            <span id="kommendeCount">0</span>
+          </div>
+          <div class="orders" id="kommendeOrders"></div>
+        </section>
+
+        <section class="column" data-status="igang">
+          <div class="column-heading">
+            <h2>I gang</h2>
+            <span id="igangCount">0</span>
+          </div>
+          <div class="orders" id="igangOrders"></div>
+        </section>
+
+        <section class="column" data-status="faerdig">
+          <div class="column-heading">
+            <h2>Færdige</h2>
+            <span id="faerdigCount">0</span>
+          </div>
+          <div class="orders" id="faerdigOrders"></div>
+        </section>
+      </section>
+    </main>
+
+    <template id="orderTemplate">
+      <article class="order-card">
+        <div class="order-card-main">
+          <div>
+            <p class="customer"></p>
+            <h3></h3>
+          </div>
+          <span class="date"></span>
+        </div>
+        <p class="note"></p>
+        <div class="card-actions">
+          <button class="text-button edit" type="button">Rediger</button>
+          <button class="text-button danger delete" type="button">Slet</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>
